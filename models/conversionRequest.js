@@ -27,6 +27,6 @@ const ConverionRequestSchema = new mongoose.Schema({
   }
 });
 
-const ConversionRequest = mongoose.model("Dog", ConverionRequestSchema);
+const ConversionRequest = mongoose.model("ConversionRequest", ConverionRequestSchema);
 
 module.exports = { ConversionRequest };
