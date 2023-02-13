@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require("mongoose");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -37,5 +38,18 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const start = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb://127.0.0.0.1:27017/"
+    );
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+start();
 
 module.exports = app;
