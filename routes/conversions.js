@@ -51,11 +51,11 @@ router.post("/", async (req, res) => {
         conversion_currency: response.data.query.to,
         conversion_rate: response.data.info.rate
       }
-
+      
       // Saving request
       const newConversionRequest = new ConversionRequest(request_parameters);
       newConversionRequest.save().then((record) => {
-        return res.status(200).json(record);
+        return res.status(201).json(record);
       }).catch((e) => {
         console.log(e.message) 
         return res.status(500).send(e.message)
