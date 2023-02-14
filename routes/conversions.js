@@ -19,13 +19,13 @@ router.get('/by_user/:id', async function(req, res) {
 });
 
 /* POST creates conversion */
-router.post("/", async (req, res) => {
-  const newConversionRequest = new ConversionRequest({ ...req.body });
-  const insertedConversionRequest = await newConversionRequest.save();
-  return res.status(201).json(insertedConversionRequest);
-});
+// router.post("/", async (req, res) => {
+//   const newConversionRequest = new ConversionRequest({ ...req.body });
+//   const insertedConversionRequest = await newConversionRequest.save();
+//   return res.status(201).json(insertedConversionRequest);
+// });
 
-router.post("/convert_and_create", async (req, res) => {
+router.post("/", async (req, res) => {
   // Parameters for the conversion request
   const url = 'https://api.apilayer.com/exchangerates_data/convert';
   const config = {
@@ -57,11 +57,12 @@ router.post("/convert_and_create", async (req, res) => {
       newConversionRequest.save().then((record) => {
         return res.status(200).json(record);
       }).catch((e) => {
+        console.log(e.message) 
         return res.status(500).send(e.message)
       });
     })
     .catch(function (e) { 
-      console.log(e) 
+      console.log(e.message) 
       return res.status(500).send(e.message)
     })
 });

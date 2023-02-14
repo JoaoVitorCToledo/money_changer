@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('money-changer:server');
 var http = require('http');
+const mongoose = require("mongoose");
 
 /**
  * Get port from environment and store in Express.
@@ -88,3 +89,16 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+const start = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb://0.0.0.0:27017"
+    );
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+start();
