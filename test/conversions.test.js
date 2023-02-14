@@ -113,6 +113,9 @@ describe('POST /conversions/', () => {
         expect(response.body.original_currency).toBe('BRL')
         expect(response.body.conversion_currency).toBe('USD')
         expect(response.body.original_value).toBe(2)
+        expect(response.body.converted_value).toBe(
+          2 * expectedResponse.data.info.rate
+        )
       })
   })
 
