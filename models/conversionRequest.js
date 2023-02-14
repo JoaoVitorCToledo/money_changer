@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const ConverionRequestSchema = new mongoose.Schema({
   user_id: {
@@ -21,12 +21,15 @@ const ConverionRequestSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  created_at: { 
-    type: Date, 
-    default: Date.now 
-  }
-});
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+})
 
-const ConversionRequest = mongoose.model("ConversionRequest", ConverionRequestSchema);
+const ConversionRequest = mongoose.model(
+  'ConversionRequest',
+  ConverionRequestSchema
+)
 
-module.exports = { ConversionRequest };
+module.exports = { ConversionRequest }
