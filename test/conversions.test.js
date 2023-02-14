@@ -27,6 +27,7 @@ describe('GET /conversions', () => {
       original_value: 2,
       conversion_currency: 'USD',
       conversion_rate: 2,
+      converted_value: 4,
     })
     const createdRequest1 = await request1.save()
 
@@ -36,6 +37,7 @@ describe('GET /conversions', () => {
       original_value: 1,
       conversion_currency: 'USD',
       conversion_rate: 4,
+      converted_value: 4,
     })
 
     const createdRequest2 = await request2.save()
@@ -59,6 +61,7 @@ describe('GET /conversions/by_user/:id', () => {
       original_value: 2,
       conversion_currency: 'USD',
       conversion_rate: 2,
+      converted_value: 4,
     })
     const createdRequest1 = await request1.save()
 
@@ -68,6 +71,7 @@ describe('GET /conversions/by_user/:id', () => {
       original_value: 1,
       conversion_currency: 'USD',
       conversion_rate: 4,
+      converted_value: 4,
     })
     await request2.save()
 
@@ -155,7 +159,6 @@ describe('POST /conversions/', () => {
         to: 'USD',
       })
       .then((response) => {
-        console.log(response)
         expect(response.statusCode).toBe(500)
         expect(response.error.text).toBe(expectedError)
       })

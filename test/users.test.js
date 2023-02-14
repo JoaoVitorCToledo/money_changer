@@ -23,6 +23,7 @@ describe('GET /users/:id/conversions', () => {
       original_value: 2,
       conversion_currency: 'USD',
       conversion_rate: 2,
+      converted_value: 4,
     })
     const createdRequest1 = await request1.save()
 
@@ -32,6 +33,7 @@ describe('GET /users/:id/conversions', () => {
       original_value: 1,
       conversion_currency: 'USD',
       conversion_rate: 4,
+      converted_value: 4,
     })
     await request2.save()
 

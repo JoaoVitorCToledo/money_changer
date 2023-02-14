@@ -17,6 +17,10 @@ const ConverionRequestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  converted_value: {
+    type: Number,
+    required: true,
+  },
   conversion_rate: {
     type: Number,
     required: true,
