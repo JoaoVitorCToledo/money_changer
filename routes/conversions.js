@@ -3,19 +3,7 @@ const axios = require('axios')
 const { ConversionRequest } = require('../models/conversionRequest')
 var router = express.Router()
 
-/* GET lists all conversion requests. */
-router.get('/', async function (req, res) {
-  const allRequests = await ConversionRequest.find()
-  res.status(200).json(allRequests)
-})
-
-/* GET lists conversion requests by user. */
-router.get('/by_user/:id', async function (req, res) {
-  const { id } = req.params
-  const allRequests = await ConversionRequest.find({ user_id: id })
-  res.status(200).json(allRequests)
-})
-
+// POST makes request to api service and saves the return
 router.post('/', async (req, res) => {
   // Parameters for the conversion request
   const url = 'https://api.apilayer.com/exchangerates_data/convert'
