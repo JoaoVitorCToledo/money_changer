@@ -1,5 +1,6 @@
 # Money Changer
 
+This project is an example of an API made to convert currencies.
 
 # Instalation
 Requirements
