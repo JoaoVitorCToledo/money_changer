@@ -1,7 +1,7 @@
 const request = require('supertest')
-const app = require('../app')
+const app = require('../../app')
 const mongoose = require('mongoose')
-const { ConversionRequest } = require('../models/conversionRequest')
+const { ConversionRequest } = require('../../models/conversionRequest')
 
 beforeEach(async () => {
   await ConversionRequest.deleteMany()

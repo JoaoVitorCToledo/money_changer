@@ -1,10 +1,8 @@
-var express = require('express')
 const axios = require('axios')
 const { ConversionRequest } = require('../models/conversionRequest')
-var router = express.Router()
 
 // POST makes request to api service and saves the return
-router.post('/', async (req, res) => {
+const createConversion = async (req, res) => {
   // Parameters for the conversion request
   const url = 'https://api.apilayer.com/exchangerates_data/convert'
   const config = {
@@ -47,6 +45,6 @@ router.post('/', async (req, res) => {
     .catch(function (e) {
       return res.status(500).send(e.message)
     })
-})
+}
 
-module.exports = router
+module.exports = createConversion

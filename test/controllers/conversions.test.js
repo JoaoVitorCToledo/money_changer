@@ -1,11 +1,11 @@
 const axios = require('axios')
 
 const request = require('supertest')
-const app = require('../app')
+const app = require('../../app')
 const mongoose = require('mongoose')
 
 jest.mock('axios')
-const { ConversionRequest } = require('../models/conversionRequest')
+const { ConversionRequest } = require('../../models/conversionRequest')
 
 beforeEach(async () => {
   await ConversionRequest.deleteMany()
