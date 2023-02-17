@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "money-changer",
+    "description": "Api that converts currencies",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3000",
+      "description": "Local Server"
+    }
+  ],
+  "paths": {
+    "/users/:user_id/conversions": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "returns all conversions made by one user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user that made the conversions",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All conversions of the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/ConversionObject" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convertions": {
+      "post": {
+        "tags": [
+          "Convertions"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "ID of the user that made the conversions",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "integer"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Original currency of the value to be converted",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "currency code"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "Amount to be converted",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Currency to convert the amount to",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "currency code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversionObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConversionObject": {
+        "type": "object",
+        "properties":
+          {
+            "_id": {
+              "type": "string",
+              "format": "object_id",
+              "example": "63eb90e23d3636f14a1680c3"
+            },
+            "user_id": {
+              "type": "number",
+              "format": "integer",
+              "example": 1
+            },
+            "original_currency": {
+              "type": "string",
+              "format": "currency code",
+              "example": "BRL"
+            },
+            "original_value": {
+              "type": "number",
+              "format": "float",
+              "example": 2
+            },
+            "conversion_currency": {
+              "type": "string",
+              "format": "currency code",
+              "example": "USD"
+            },
+            "converted_value": {
+              "type": "number",
+              "format": "float",
+              "example": 2
+            },
+            "conversion_rate": {
+              "type": "number",
+              "format": "float",
+              "example": 0.388388
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date time",
+              "example": "2023-02-14T13:47:14.890Z"
+            },
+            "__v": {
+              "type": "number",
+              "format": "integer",
+              "example": 0
+            }
+          }
+
+      }
+    }
+  }
+}
