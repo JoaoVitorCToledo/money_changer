@@ -54,8 +54,8 @@ describe('POST /conversions/', () => {
   })
 
   it('should not create a ConversionRequest when conversion requisition fails', async () => {
-    axios.get.mockImplementation(() =>
-      Promise.reject({ message: 'mocked error' })
+    axios.get.mockImplementationOnce(() =>
+      Promise.reject({ message: 'mocked request error' })
     )
 
     return request(app)
@@ -68,7 +68,7 @@ describe('POST /conversions/', () => {
       })
       .then((response) => {
         expect(response.statusCode).toBe(500)
-        expect(response.error.text).toBe('mocked error')
+        expect(response.error.text).toBe('mocked request error')
       })
   })
 
@@ -83,7 +83,7 @@ describe('POST /conversions/', () => {
       },
     }
 
-    axios.get.mockImplementation(() => Promise.resolve(expectedResponse))
+    axios.get.mockImplementationOnce(() => Promise.resolve(expectedResponse))
 
     const expectedError =
       'ConversionRequest validation failed: user_id: Path `user_id` is required.'
@@ -96,8 +96,40 @@ describe('POST /conversions/', () => {
         to: 'USD',
       })
       .then((response) => {
-        expect(response.statusCode).toBe(500)
+        expect(response.statusCode).toBe(422)
         expect(response.error.text).toBe(expectedError)
+      })
+  })
+
+  it('should not create a ConversionRequest it fails saving the requisition', async () => {
+    const expectedResponse = {
+      data: {
+        success: true,
+        query: { from: 'BRL', to: 'USD', amount: 2 },
+        info: { timestamp: 1676391363, rate: 0.193926 },
+        date: '2023-02-14',
+        result: 0.387852,
+      },
+    }
+
+    axios.get.mockImplementationOnce(() => Promise.resolve(expectedResponse))
+    jest
+      .spyOn(ConversionRequest.prototype, 'save')
+      .mockImplementationOnce(() =>
+        Promise.reject({ message: 'mocked db error' })
+      )
+
+    return request(app)
+      .post('/conversions')
+      .send({
+        user_id: 1,
+        from: 'BRL',
+        amount: 2,
+        to: 'USD',
+      })
+      .then((response) => {
+        expect(response.statusCode).toBe(500)
+        expect(response.error.text).toBe('mocked db error')
       })
   })
 })
