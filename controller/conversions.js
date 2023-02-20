@@ -1,5 +1,6 @@
-const { ConversionRequest } = require('../models/conversionRequest')
 const requestConversion = require('../services/requestConversion')
+const SaveConversionRequest = require('../services/saveConvertionRequest')
+
 // POST makes request to api service and saves the return
 const createConversion = (req, res) => {
   // Conversion request
@@ -17,17 +18,20 @@ const createConversion = (req, res) => {
       }
 
       // Saving request
-      new ConversionRequest(request_parameters)
-        .save(request_parameters)
-        .then((record) => {
+      const saveConversionRequest = new SaveConversionRequest()
+
+      saveConversionRequest
+        .on('SUCCESS', (record) => {
           return res.status(201).json(record)
         })
-        .catch((e) => {
-          if (e.name === 'ValidationError') {
-            return res.status(422).send(e.message)
-          }
+        .on('VALIDATION_ERROR', (e) => {
+          return res.status(422).send(e.message)
+        })
+        .on('ERROR', (e) => {
           return res.status(500).send(e.message)
         })
+
+      saveConversionRequest.execute(request_parameters)
     })
     .catch(function (e) {
       return res.status(500).send(e.message)
