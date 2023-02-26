@@ -1,5 +1,5 @@
 const requestConversion = require('../services/requestConversion')
-const SaveConversionRequest = require('../services/saveConvertionRequest')
+const saveConversionRequest = require('../services/saveConvertionRequest')
 
 // POST makes request to api service and saves the return
 const createConversion = (req, res) => {
@@ -17,21 +17,17 @@ const createConversion = (req, res) => {
         converted_value: data.query.amount * data.info.rate,
       }
 
-      // Saving request
-      const saveConversionRequest = new SaveConversionRequest()
-
-      saveConversionRequest
-        .on('SUCCESS', (record) => {
+      saveConversionRequest(request_parameters)
+        .then((record) => {
           return res.status(201).json(record)
         })
-        .on('VALIDATION_ERROR', (e) => {
-          return res.status(422).send(e.message)
+        .catch((rejectionArray) => {
+          if (rejectionArray[0] === 'VALIDATION_ERROR') {
+            return res.status(422).send(e.message)
+          } else {
+            return res.status(500).send(e.message)
+          }
         })
-        .on('ERROR', (e) => {
-          return res.status(500).send(e.message)
-        })
-
-      saveConversionRequest.execute(request_parameters)
     })
     .catch(function (e) {
       return res.status(500).send(e.message)

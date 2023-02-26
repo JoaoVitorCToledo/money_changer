@@ -1,14 +1,16 @@
-var createError = require('http-errors')
-var express = require('express')
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+const createError = require('http-errors')
+const express = require('express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
 
 const routeCatalogue = require('./routes/catalogue')
 
-var app = express()
+require('dotenv').config()
+
+const app = express()
 
 app.use(logger('dev'))
 app.use(express.json())

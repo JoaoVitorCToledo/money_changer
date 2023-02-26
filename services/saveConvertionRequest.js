@@ -1,20 +1,22 @@
-const EventEmitter = require('events')
 const { ConversionRequest } = require('../models/conversionRequest')
 
-module.exports = class SaveConversionRequest extends EventEmitter {
-  execute(params) {
+const saveConversionRequest = (params) => {
+  return new Promise((resolve, reject) => {
     const conversionRequest = new ConversionRequest(params)
 
     conversionRequest
       .save()
       .then((conversionRequest) => {
-        this.emit('SUCCESS', conversionRequest)
+        resolve(conversionRequest)
       })
       .catch((error) => {
+        console.log(error.name)
         if (error.name === 'ValidationError') {
-          return this.emit('VALIDATION_ERROR', error)
+          return reject(['VALIDATION_ERROR', error])
         }
-        this.emit('ERROR', error)
+        reject(['ERROR', error])
       })
-  }
+  })
 }
+
+module.exports = saveConversionRequest

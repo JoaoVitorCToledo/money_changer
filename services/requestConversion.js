@@ -2,10 +2,10 @@ const axios = require('axios')
 
 const requestConversion = function (to, from, amount) {
   // Parameters for the conversion request
-  const url = 'https://api.apilayer.com/exchangerates_data/convert'
+  const url = process.env.EXCHANGE_URL
   const config = {
     headers: {
-      apikey: '9Mzq2PAfzNCXosePrNVijjmuzv3bDkOe',
+      apikey: process.env.API_KEY,
     },
     params: {
       to: to,
